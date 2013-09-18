@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html, body, #map_canvas { margin: 0; padding: 0; height: 100%; }
+    </style>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization">
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+        var centros_objects = [
+        {
+          "idCentro":1,
+          "calle":"Mexico",
+          "numExterior":"5",
+          "numInterior":"2",
+          "codigoPostal":"06100",
+          "telefono":"5585405850",
+          "latitud":"19.413821",
+          "longitud":"-99.169573",
+          "horario":"De 10 a 14",
+          "estatus":"verificado",
+          "idTipo":2,
+          "referencia":"En la paleteria Artik"
+        },
+        {
+          "idCentro":1,
+          "calle":"Chilpancingo",
+          "numExterior":"41",
+          "numInterior":"401",
+          "codigoPostal":"06100",
+          "telefono":"5585405850",
+          "latitud":"19.413821",
+          "longitud":"-99.239573",
+          "horario":"De 10 a 14",
+          "estatus":"verificado",
+          "idTipo":2,
+          "referencia":"En la paleteria Artik"
+        }];
+        
+        $(document).ready(function() {
+            var map;
+          function initialize() {
+            var mapOptions = {
+              zoom: 8,
+              center: new google.maps.LatLng(19.413, -99.239573),
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById('map_canvas'),
+                mapOptions);
+            for ( var i = 0; i < centros_objects.length; i++ ) {
+              
+              var latLng = new google.maps.LatLng(centros_objects[i].latitud, centros_objects[i].longitud);
+              var marker = new google.maps.Marker({
+                position: latLng,
+                map: map
+              });
+            }
+            
+          }
+
+
+          google.maps.event.addDomListener(window, 'load', initialize);
+        });
+
+          
+
+
+        </script>
+
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas"></div>
+  </body>
+</html>
