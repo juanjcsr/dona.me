@@ -24,7 +24,41 @@
     <script
       src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization">
     </script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img src="images/logo.png" width="100px"><a class="navbar-brand" href="/"></a></img>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/dona.me/">Inicio</a></li>
+            <li class="active"><a href="#">Centros de Acopio Cercanos</a></li>
+            <li><a href="donar.html">Crear Centro Comunitario</a></li>
+            <li><a href="comunicar.html">Contactar Centro Oficial</a></li>
+            
+          </ul>
+          
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+    <div id="map_canvas"></div>
+    <footer>
+        <p>&copy; Company 2013</p>
+      </footer>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      
+       <script src="js/main.js"></script>
     <script>
         var centros_objects = [
         {
@@ -66,24 +100,30 @@
             };
             map = new google.maps.Map(document.getElementById('map_canvas'),
                 mapOptions);
-            
+            var infowindow = new google.maps.InfoWindow();
             for ( var i = 0; i < centros_objects.length; i++ ) {
               
               var latLng = new google.maps.LatLng(centros_objects[i].latitud, centros_objects[i].longitud);
               var content = "<h2>Centro de Acopio</h2><div><p>"+ centros_objects[i].calle+"</p><p>"+centros_objects[i].referencia+"</p></div><h4>"+centros_objects[i].estatus+'</h4><a class="btn btn-default" href="#">Dame tu opinioon &raquo;</a>';
               var marker = new google.maps.Marker({
                 position: latLng,
-                map: map
+                map: map, 
+                content: content
               });
 
-              var infowindow = new google.maps.InfoWindow();
+              
+              
 
               google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
                 return function() {
-                  infowindow.setContent(content);
+                  infowindow.setContent(marker.content);
                   infowindow.open(map,marker);
                 };
               })(marker,content,infowindow));
+
+              google.maps.event.addListener(map, 'click', function() {
+                infowindow.close();
+              });
 
             }
             
@@ -93,52 +133,11 @@
           google.maps.event.addDomListener(window, 'load', initialize);
         });
         </script>
-
-  </head>
-  <body onload="initialize()">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <img src="images/logo.png" width="100px"><a class="navbar-brand" href="/"></a></img>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </div>
-    <div id="map_canvas"></div>
-    <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src='//www.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
   </body>
 </html>

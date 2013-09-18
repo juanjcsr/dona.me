@@ -1,3 +1,7 @@
+#body_index {
+	padding-top: 0px;
+}
+
 #map_canvas {
 	margin: 0;
     padding: 0;
@@ -6,6 +10,20 @@
 
 #map_canvas img {
 	max-width: 100%;
+}
+
+.principal {
+	text-align: center;
+	background-image: url('images/AcopiameBackground.png')
+}
+
+#texto_direccion {display:inline-block}
+
+#texto_direccion {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	width: 60%;
+	text-align: center;
 }
 
 .CSSTableDonar {

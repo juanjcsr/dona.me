@@ -40,10 +40,19 @@ audio:not([controls]) {
   display: none;
 }
 
+@font-face {
+  font-family: 'dinpro'; src: url('../fonts/DINPro-Light.otf');
+}
+
+@font-face {
+  font-family: 'simplebold'; src: url('../fonts/Simple-Bold.ttf');
+}
+
 html {
-  font-family: sans-serif;
+  font-family: dinpro;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+
 }
 
 body {
@@ -300,7 +309,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: dinpro;
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
@@ -462,7 +471,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: dinpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   line-height: 1.1;
 }
