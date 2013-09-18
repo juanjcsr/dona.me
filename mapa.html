@@ -49,13 +49,25 @@
             };
             map = new google.maps.Map(document.getElementById('map_canvas'),
                 mapOptions);
+            
             for ( var i = 0; i < centros_objects.length; i++ ) {
               
               var latLng = new google.maps.LatLng(centros_objects[i].latitud, centros_objects[i].longitud);
+              var content = "<h2>Centro de Acopio</h2><div><p>"+ centros_objects[i].calle+"</p><p>"+centros_objects[i].referencia+"</p></div><h4>"+centros_objects[i].estatus+"</h4>"
               var marker = new google.maps.Marker({
                 position: latLng,
                 map: map
               });
+
+              var infowindow = new google.maps.InfoWindow();
+
+              google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+                return function() {
+                  infowindow.setContent(content);
+                  infowindow.open(map,marker);
+                };
+              })(marker,content,infowindow));
+
             }
             
           }
