@@ -34,7 +34,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <img src="images/logo.png" width="100px"><a class="navbar-brand" href="/"></a></img>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -77,8 +77,38 @@
 
     <div class="container">
       <!-- Example row of columns -->
-      
+      <form class="form-horizontal" method="post">
+        <fieldset>
 
+      <!-- Form Name -->
+      <legend>Manda tus comentarios</legend>
+
+      <!-- Textarea -->
+      <div class="control-group">
+        <label class="control-label" for="mensaje">Mensaje</label>
+        <div class="controls">                     
+          <textarea id="mensaje" name="mensaje">blabla</textarea>
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="control-group">
+        <label class="control-label" for="textinput">Email</label>
+        <div class="controls">
+          <input id="email" name="email" placeholder="placeholder" class="input-xlarge" type="email">
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="control-group">
+        <div class="controls">
+          <br>
+          <button id="singlebutton" name="enviar" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+
+      </fieldset>
+      </form>
       
     </div> <!-- /container -->
     <footer>
