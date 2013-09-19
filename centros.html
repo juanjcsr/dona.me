@@ -86,7 +86,7 @@
           "longitud":"-99.239573",
           "horario":"De 10 a 14",
           "estatus":"verificado",
-          "idTipo":2,
+          "idTipo":3,
           "referencia":"En la paleteria Artik"
         }];
         
@@ -101,15 +101,39 @@
             map = new google.maps.Map(document.getElementById('map_canvas'),
                 mapOptions);
             var infowindow = new google.maps.InfoWindow();
+            var imgOficial = 'images/icon_map_oficial.png';
+            var imgComunitario = 'images/icon_map_comunitario.png';
+            var imgDormitorio = 'images/icon_map_dormitorio.png';
             for ( var i = 0; i < centros_objects.length; i++ ) {
               
               var latLng = new google.maps.LatLng(centros_objects[i].latitud, centros_objects[i].longitud);
               var content = "<h2>Centro de Acopio</h2><div><p>"+ centros_objects[i].calle+"</p><p>"+centros_objects[i].referencia+"</p></div><h4>"+centros_objects[i].estatus+'</h4><a class="btn btn-default" href="#">Dame tu opinioon &raquo;</a>';
-              var marker = new google.maps.Marker({
+              switch( centros_objects[i].idTipo) {
+              case 1: 
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map, 
+                  content: content,
+                  icon: imgDormitorio
+                });
+                break;  
+              case 2:
+                var marker = new google.maps.Marker({
                 position: latLng,
                 map: map, 
-                content: content
+                content: content,
+                icon: imgComunitario
               });
+                break;
+              case 3:
+                var marker = new google.maps.Marker({
+                  position: latLng,
+                  map: map, 
+                  content: content,
+                  icon: imgOficial
+                });
+                break;
+              }
 
               
               
