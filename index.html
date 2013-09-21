@@ -11,6 +11,8 @@
         <meta name="viewport" content="width=device-width">
 
         <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.10.3.custom.min.css">
+        
         <style>
             body {
                 padding-top: 50px;
@@ -21,6 +23,7 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     </head>
     <body id="body_index">
         <!--[if lt IE 7]>
@@ -45,9 +48,10 @@
         <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
 
         <p>
-          <form name="direccion[]" action="centros.html" method="post">
+          <form name="direccion[]" action="centros.html" method="get">
           <input type="text" name="direccion" placeholder="Tlaxcoaque 8, Centro, DF" class="form-control" id="texto_direccion" required></input>
-          <input type="submit" value="Ubica tu centro &raquo;" class="btn btn-primary btn-lg" />
+          <input type="hidden" name="idColonia" id="hidden_colonia" />
+          <input type="submit" onclick="codeAddress()" value="Ubica tu centro &raquo;" class="btn btn-primary btn-lg" />
           </form>
         </p>
       </div>
@@ -110,10 +114,49 @@
       </footer>
     </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/main.js"></script>
+        <script>
+          $(document).ready(function (){
+            $("#texto_direccion").autocomplete({
+              source: function(request, response) {
+                $.ajax({
+                  url: "http://acopia.me/api/buscar/general/",
+                  dataType: 'json',
+                  data: {
+                    busca: request.term
+                  },
+                  success: function(data){
+                    response($.map(data.results, function(item) {
+                        return {
+                          label: item.coloniaNombre,
+                          value: item.idColonia
+                        }
+                        
+                    }));
+                  }
+                });
+              },
+              minLength: 3,
+              select: function(event, ui) {
+                console.log(event );
+                console.log(ui.item);
+                $('#texto_direccion').val(ui.item.label);
+                $('#hidden_colonia').val(ui.item.value);
+              },
+              open: function() {
+                $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+               },
+               close: function() {
+                $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
+               }
+              
+            })
+          })
+        </script>
 
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

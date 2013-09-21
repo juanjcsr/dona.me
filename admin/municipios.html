@@ -74,6 +74,7 @@
         <script src="../js/main.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
+            $("#mun_select").hide();
             $.getJSON('estados.json', function(json){
                 var select = document.getElementById("estados_drop");
                 
@@ -102,8 +103,8 @@
                         option.innerHTML = json.mexico.estado[val].municipios.municipio[i].nombre;
                         select_m.appendChild(option);
                     }
-                    
-                });
+                    $("#mun_select").show()
+;                });
 
             });
 

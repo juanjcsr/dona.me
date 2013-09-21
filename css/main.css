@@ -6,15 +6,35 @@
 	margin: 0;
     padding: 0;
 	height: 100%;
+	position: fixed;
+	top: 0;
+
 }
 
 #map_canvas img {
 	max-width: 100%;
 }
 
+#lista_centros {
+	float: left;
+	width: 30%;
+	height: 70%;
+	padding-left: 50px;
+	padding-top: 100px;
+	background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
+	overflow: scroll;
+	
+}
+
+.centros_list {
+	box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.1) inset;
+
+}
+
 .principal {
 	text-align: center;
-	background-image: url('images/AcopiameBackground.png')
+	background-image: url('/images/AcopiameBackground.png')
 }
 
 #texto_direccion {display:inline-block}

@@ -50,7 +50,13 @@
         </div><!--/.navbar-collapse -->
       </div>
     </div>
-    <div id="map_canvas"></div>
+
+      <div id="lista_centros">aa</div>
+      <div id="map_canvas"></div>
+
+      
+    
+    
     <footer>
         <p>&copy; Company 2013</p>
       </footer>
@@ -64,6 +70,7 @@
         {
           "idCentro":1,
           "calle":"Mexico",
+          "nombre":"Centro de Artik",
           "numExterior":"5",
           "numInterior":"2",
           "codigoPostal":"06100",
@@ -78,6 +85,7 @@
         {
           "idCentro":1,
           "calle":"Chilpancingo",
+          "nombre":"Centro de Chilpancingo",
           "numExterior":"41",
           "numInterior":"401",
           "codigoPostal":"06100",
@@ -88,18 +96,62 @@
           "estatus":"verificado",
           "idTipo":3,
           "referencia":"En la paleteria Artik"
+        },
+        {
+          "idCentro":3,
+          "calle":"Calzada de Tlalpan",
+          "nombre":"Centro de Tlalpan",
+          "numExterior":"41",
+          "numInterior":"401",
+          "codigoPostal":"06100",
+          "telefono":"5585405850",
+          "latitud":"19.423821",
+          "longitud":"-99.239573",
+          "horario":"De 10 a 14",
+          "estatus":"verificado",
+          "idTipo":3,
+          "referencia":"En la calle"
         }];
-        
+        var gmarkers = [];
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+            function mymy(i){
+              google.maps.event.trigger(gmarkers[i],"click");
+            }
         $(document).ready(function() {
+
+
+
             var map;
+            var geocoder;
+            var initialPos;
+            
           function initialize() {
+            geocoder = new google.maps.Geocoder();
+            initialPos = new google.maps.LatLng(19.413, -99.239573);
             var mapOptions = {
-              zoom: 8,
-              center: new google.maps.LatLng(19.413, -99.239573),
+              zoom: 10,
+              center: initialPos,
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
+            //map create
             map = new google.maps.Map(document.getElementById('map_canvas'),
                 mapOptions);
+
+            var address = getParameterByName("direccion");
+          
+            geocoder.geocode({'address':address}, function(result,  status) {
+              if (status== google.maps.GeocoderStatus.OK) {      
+                map.setCenter(result[0].geometry.location);
+                map.setZoom(14);
+              }
+              
+            });
             var infowindow = new google.maps.InfoWindow();
             var imgOficial = 'images/icon_map_oficial.png';
             var imgComunitario = 'images/icon_map_comunitario.png';
@@ -107,37 +159,45 @@
             for ( var i = 0; i < centros_objects.length; i++ ) {
               
               var latLng = new google.maps.LatLng(centros_objects[i].latitud, centros_objects[i].longitud);
-              var content = "<h2>Centro de Acopio</h2><div><p>"+ centros_objects[i].calle+"</p><p>"+centros_objects[i].referencia+"</p></div><h4>"+centros_objects[i].estatus+'</h4><a class="btn btn-default" href="#">Dame tu opinioon &raquo;</a>';
+              var content = "<h2>Centro de Acopio</h2><div><p>Calle: "+ centros_objects[i].calle+"</p><p>Referencia: "+centros_objects[i].referencia+"</p></div><h4>Estado del centro: "+centros_objects[i].estatus+'</h4>';
+             
+              var tipo_centro = "";
+              var marker;
               switch( centros_objects[i].idTipo) {
-              case 1: 
-                var marker = new google.maps.Marker({
+                
+                case 1: 
+                  tipo_centro = "Dormitorio.";
+                  marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map, 
+                    content: content,
+                    icon: imgDormitorio
+                  });
+                  break;  
+                case 2:
+                  tipo_centro = "Centro Comunitario.";
+                  marker = new google.maps.Marker({
                   position: latLng,
                   map: map, 
                   content: content,
-                  icon: imgDormitorio
+                  icon: imgComunitario
                 });
-                break;  
-              case 2:
-                var marker = new google.maps.Marker({
-                position: latLng,
-                map: map, 
-                content: content,
-                icon: imgComunitario
-              });
-                break;
-              case 3:
-                var marker = new google.maps.Marker({
-                  position: latLng,
-                  map: map, 
-                  content: content,
-                  icon: imgOficial
-                });
-                break;
+                  break;
+                case 3:
+                  tipo_centro = "Centro Oficial.";
+                  marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map, 
+                    content: content,
+                    icon: imgOficial
+                  });
+                  break;
               }
+              gmarkers.push(marker);
 
-              
-              
-
+               var content_tabla = '<h2><a href="javascript:mymy('+i+')">'+centros_objects[i].nombre+"</a></h2><div><p>Calle: "+ centros_objects[i].calle+"</p><p>Referencia: "+centros_objects[i].referencia+"</p></div><h4>Estado del centro: "+centros_objects[i].estatus+'</h4><p>Tipo centro: '+tipo_centro+'</p></h4><a class="btn btn-default" href="#">Ponte en contacto &raquo;</a>';
+               var tabla_contenido = '<div class="centros_list">'+content_tabla+'</div>';
+              $("#lista_centros").append(tabla_contenido);
               google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
                 return function() {
                   infowindow.setContent(marker.content);
@@ -155,7 +215,11 @@
 
 
           google.maps.event.addDomListener(window, 'load', initialize);
+
+          
+
         });
+
         </script>
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
